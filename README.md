@@ -8,7 +8,7 @@ Desktop AI tools are getting better at persistence — memory features, project 
 
 Claude Code operates inside your project. It reads your file structure, follows your frameworks, carries memory across sessions, and writes output directly into organized folders. These skills lean into that by solving one of the biggest practical problems: **session continuity**.
 
-Without a handoff system, every new Claude Code session starts with "where were we?" — re-reading files, re-establishing context, figuring out what's done and what's open. These two skills eliminate that.
+Without a handoff system, every new Claude Code session starts with "where were we?" — re-reading files, re-establishing context, figuring out what's done and what's open. And without a feedback loop, every correction you make in conversation disappears the moment the session ends. These skills eliminate both problems.
 
 ## Skills
 
@@ -34,6 +34,19 @@ Run at the beginning of a session. Reads the last session's brief, checks git st
 
 No re-reading, no "where were we?" — just orientation and go.
 
+### `/reflect` — Skill File Improvement
+
+Run at the end of a session (or automatically as part of `/brief`). Scans the conversation for corrections, approvals, and validated patterns, then proposes updates to whichever skill files were used during the session.
+
+- Extracts explicit corrections ("don't do X," "always use Y") as high-confidence rules
+- Captures quietly approved approaches as medium-confidence patterns
+- Filters out one-time contextual decisions that don't generalize
+- Proposes additions to a `## Learnings` section at the bottom of each affected skill file
+- Graduates stable learnings into the main skill body after 5+ sessions without contradiction
+- Nothing is written without explicit user approval
+
+Every correction you make in conversation becomes a durable rule instead of evaporating at session end. Skill files improve from use the way we improve from experience.
+
 ## Installation
 
 Copy the skills into your project's `.claude/skills/` directory:
@@ -42,7 +55,9 @@ Copy the skills into your project's `.claude/skills/` directory:
 .claude/skills/
 ├── brief/
 │   └── SKILL.md
-└── start/
+├── start/
+│   └── SKILL.md
+└── reflect/
     └── SKILL.md
 ```
 
@@ -53,7 +68,7 @@ brief/
 └── session-brief.md
 ```
 
-Then use `/brief` at the end of sessions and `/start` at the beginning.
+Then use `/brief` at the end of sessions and `/start` at the beginning. `/reflect` runs automatically as part of `/brief` when both skills are installed, or you can invoke it standalone at any time.
 
 ## How It Fits
 

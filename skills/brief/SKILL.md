@@ -27,6 +27,16 @@ Overwrite `/brief/session-brief.md` with a comprehensive brief covering:
 
 This is NOT about brevity — be as thorough as needed to retain all important context.
 
+### 2.5. Reflect on Skills (Optional)
+
+If the `reflect` skill is installed, run it after writing the brief to scan the conversation for learnings. This is a delegation, not a repeat of the reflect instructions — load and follow the reflect skill.
+
+- If learnings are found: present them to the user alongside the brief, before committing
+- If no learnings: report "no new skill learnings detected" in one line and continue
+- Any approved skill updates will be committed together with the brief in Step 3
+
+If the reflect skill is not installed, skip this step.
+
 ### 3. Commit and Push
 
 After writing the brief:
