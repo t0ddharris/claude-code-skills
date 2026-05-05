@@ -16,7 +16,7 @@ Scan the conversation for skill invocations. Look for:
 - Agent delegations that loaded a skill
 
 If no skills were used this session, check whether the corrections apply to:
-- General behavior → suggest a CLAUDE.md update instead
+- General behavior → suggest a CLAUDE.md or memory update instead
 - A specific skill that *should* have been used → note the routing gap
 - Neither → report "no learnings to extract" and stop
 
@@ -43,7 +43,7 @@ Scan the full conversation for three signal types:
 - One-time contextual decisions (e.g., "make this one shorter" doesn't mean all future outputs should be shorter)
 - Task-specific details that don't generalize beyond this session
 - Things already documented in the skill file, CLAUDE.md, or memory
-- Corrections to voice, profile, or biographical facts (those belong in project-level config like CLAUDE.md, not in a procedural skill)
+- Corrections to product facts (those belong in `/brain/`, not skills)
 - Preferences already captured in the session brief's carried-forward sections
 
 ## Step 3: Read the Target Skill Files
@@ -55,7 +55,7 @@ For each skill identified in Step 1, read its SKILL.md. Check:
 
 ## Step 4: Propose Updates
 
-Present proposed changes in this format:
+Present proposed changes in this format. **Always label each proposed update with a letter (A, B, C...) so the user can approve or reject individual items by letter.**
 
 ```
 ## Reflect: Session [N] Learnings
@@ -67,8 +67,11 @@ Present proposed changes in this format:
 ### Proposed Skill Updates
 
 **[skill-name]:**
-- [HIGH] Add: "[actionable rule]"
-- [MEDIUM] Add: "[pattern description]"
+- **(A)** [HIGH] Add: "[actionable rule]"
+- **(B)** [MEDIUM] Add: "[pattern description]"
+
+**[other-skill-name]:**
+- **(C)** [HIGH] Add: "[actionable rule]"
 
 ### Skipped (already captured)
 - [Any signals that are already in the skill or CLAUDE.md]
@@ -77,11 +80,13 @@ Present proposed changes in this format:
 - [Why no updates are warranted this session]
 ```
 
+Letters run continuously across skills (A, B, C...) so the user can say "approve A and C, skip B" without ambiguity.
+
 **STOP and wait for user approval before making any changes.**
 
 The user can:
-- Accept all proposed changes (Y)
-- Accept some, reject others (specify which)
+- Accept all proposed changes (Y / approve all)
+- Accept some, reject others by letter ("A and C" / "skip B")
 - Modify the wording of any proposed change
 - Add learnings that weren't detected
 - Reject everything (no changes made)
@@ -102,7 +107,7 @@ Append approved learnings to the skill's `## Learnings` section at the bottom of
 Format rules:
 - One line per learning, prefixed with confidence tag
 - Include session number and date for traceability
-- Write as actionable rules, not session logs ("Always X" not "User said to do X")
+- Write as actionable rules, not session logs ("Always X" not "Todd said to do X")
 - Keep each entry to one sentence. If it needs more, it's too complex for a learning: promote it directly to the main skill body instead.
 
 ## Step 6: Graduation Check
@@ -119,7 +124,7 @@ Tell the user which learnings are candidates for graduation and where in the ski
 ## When Called from /brief
 
 When invoked as Step 2.5 of the `/brief` workflow:
-- Run after the brief is written, before the git commit
+- Run after the brief is written, before the git question
 - Keep output concise: just the signals table and proposed changes
 - Skill updates are committed together with the brief in one commit
 - If no learnings were detected, say so in one line and move on
@@ -133,8 +138,8 @@ When invoked directly:
 ## Scope Boundaries
 
 This skill does NOT:
-- Modify project-level config files (CLAUDE.md, voice/profile files, etc.) directly — suggest updates, don't apply
-- Modify `CLAUDE.md` directly — but DO surface cross-cutting learnings as suggested CLAUDE.md updates for the user to apply
+- Modify `/brain/` files (product facts are managed by product-marketer)
+- Modify `CLAUDE.md` (use `/revise-claude-md` for that; but DO suggest CLAUDE.md updates if a learning is cross-cutting)
 - Modify memory files (the memory system is separate)
 - Auto-commit without user approval
 - Extract learnings when no skills were used (suggests alternatives instead)
@@ -145,6 +150,6 @@ Before proposing any learning, ask yourself:
 1. **Is this generalizable?** Would this apply in the next 5 sessions, not just this one?
 2. **Is this actionable?** Can a future session follow this rule without ambiguity?
 3. **Is it already captured?** Check the skill file, CLAUDE.md, memory, and session brief.
-4. **Is it the right home?** Skill-specific → skill file. Cross-cutting → suggest CLAUDE.md. Voice, profile, or biographical fact → suggest CLAUDE.md or a dedicated project config file.
+4. **Is it the right home?** Skill-specific → skill file. Cross-cutting → suggest CLAUDE.md. Product fact → suggest `/brain/`.
 
 If a session produced no generalizable learnings, that's fine. Say "no new learnings detected" and move on. Not every session teaches something new. Forcing weak learnings into skills degrades them over time.

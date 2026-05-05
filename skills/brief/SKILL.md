@@ -27,25 +27,31 @@ Overwrite `/brief/session-brief.md` with a comprehensive brief covering:
 
 This is NOT about brevity — be as thorough as needed to retain all important context.
 
-### 2.5. Reflect on Skills (Optional)
+### 2.5. Reflect on Skills
 
-If the `reflect` skill is installed, run it after writing the brief to scan the conversation for learnings. This is a delegation, not a repeat of the reflect instructions — load and follow the reflect skill.
+After writing the brief, run the `reflect` skill to scan the conversation for learnings. This is a delegation, not a repeat of the reflect instructions. Load and follow the reflect skill.
 
-- If learnings are found: present them to the user alongside the brief, before committing
-- If no learnings: report "no new skill learnings detected" in one line and continue
-- Any approved skill updates will be committed together with the brief in Step 3
+- If learnings are found: present them to the user alongside the brief, before asking about git
+- If no learnings: report "no new skill learnings detected" in one line and continue to Step 3
+- Any approved skill updates will be committed together with the brief in Step 4
 
-If the reflect skill is not installed, skip this step.
+### 3. Ask About Git
 
-### 3. Commit and Push
+After writing the brief, **always ask the user** which option they want:
 
-After writing the brief:
+1. **Commit + push** — full checkpoint to GitHub
+2. **Commit only** — local save point, push later
+3. **Brief only** — just the file update, no git operations
+
+Present these as a quick choice. Do NOT assume commit+push.
+
+### 4. If Committing (options 1 or 2)
 
 1. Run `git status` to see all changes (staged + unstaged + untracked)
 2. Run `git log --oneline -3` to match commit message style
 3. Stage all relevant files (`git add` — use specific paths, not `-A`)
 4. Commit with message format: `Session [N]: [1-2 sentence summary of session work]`
-5. Push to origin: `git push`
+5. If option 1, push to origin: `git push`
 
 **Commit rules:**
 - Do NOT stage files that look like secrets (`.env`, credentials, tokens)
