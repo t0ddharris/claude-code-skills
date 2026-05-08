@@ -1,6 +1,6 @@
 # Claude Code Skills
 
-Session management skills for [Claude Code](https://claude.com/claude-code) — designed to give AI-assisted workflows persistent memory and continuity across sessions.
+Session management and cross-tool skills for [Claude Code](https://claude.com/claude-code) — persistent memory, continuity across sessions, and interop with other AI coding tools.
 
 ## The Problem
 
@@ -47,6 +47,15 @@ Run at the end of a session (or automatically as part of `/brief`). Scans the co
 
 Every correction you make in conversation becomes a durable rule instead of evaporating at session end. Skill files improve from use the way we improve from experience.
 
+### `/sync-skills` — Claude → Codex Skill Sync
+
+Keeps your Claude Code skills available in Codex. Prompts for scope, then syncs:
+
+- **Project-level** — hardlinks `.claude/skills/` → `.agents/skills/` in your repo. Codex can't follow symlinks reliably, so hardlinks are used instead. Edits in either location update both.
+- **User-level** — copies `~/.claude/skills/` → `~/.codex/skills/` with a `.synced-from-claude` marker file to track provenance. Skills you create directly in `~/.codex/skills/` are preserved.
+
+Detects and skips skills managed by their own installer (e.g. [gstack](https://github.com/garrytan/gstack)'s `./setup --host codex`) so there are no collisions. Marker file approach borrowed from [ariccb/sync-claude-skills-to-codex](https://lobehub.com/skills/ariccb-sync-claude-skills-to-codex-sync-claude-skills-to-codex).
+
 ## Installation
 
 Copy the skills into your project's `.claude/skills/` directory:
@@ -57,7 +66,9 @@ Copy the skills into your project's `.claude/skills/` directory:
 │   └── SKILL.md
 ├── start/
 │   └── SKILL.md
-└── reflect/
+├── reflect/
+│   └── SKILL.md
+└── sync-skills/
     └── SKILL.md
 ```
 
