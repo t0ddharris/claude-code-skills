@@ -39,6 +39,17 @@ Run at the end of a session (or automatically as part of `/brief`). Scans the co
 
 Every correction you make in conversation becomes a durable rule instead of evaporating at session end. Skill files improve from use the way we improve from experience.
 
+### `/devils-advocate` — Cross-Model Adversarial Critique
+
+Sends your work to Google Gemini for an outside critique. Takes a campaign plan, positioning statement, blog draft, chunk of code, or any other artifact and gets a structured teardown from a model in a different lineage.
+
+- **Steelmans first** — builds the strongest honest case for the work before attacking it
+- **Structured output** — specific weaknesses with location, problem, why it matters, and suggested fix
+- **Verdict** — returns SHIP, SHIP WITH FIXES, REWORK, or KILL with reasoning
+- **Context-aware** — pass supporting files (positioning docs, audience profiles, product truth) so the critique is grounded in your actual strategy
+
+Requires a `GOOGLE_AI_STUDIO_API_KEY` in your `.env` file. No other dependencies.
+
 ### `/sync-skills` — Claude → Codex Skill Sync
 
 Keeps your Claude Code skills available in Codex. Prompts for scope, then syncs:
@@ -60,8 +71,12 @@ Copy the skills into your project's `.claude/skills/` directory:
 │   └── SKILL.md
 ├── reflect/
 │   └── SKILL.md
-└── sync-skills/
-    └── SKILL.md
+├── sync-skills/
+│   └── SKILL.md
+└── devils-advocate/
+    ├── SKILL.md
+    └── scripts/
+        └── challenge.py
 ```
 
 Create a `/brief/` directory in your project root for the session brief file:
