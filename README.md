@@ -2,14 +2,6 @@
 
 Session management and cross-tool skills for [Claude Code](https://claude.com/claude-code) — persistent memory, continuity across sessions, and interop with other AI coding tools.
 
-## The Problem
-
-Desktop AI tools are getting better at persistence — memory features, project files, custom instructions. But it's still persistence bolted onto a chat interface. You're attaching context to a conversation.
-
-Claude Code operates inside your project. It reads your file structure, follows your frameworks, carries memory across sessions, and writes output directly into organized folders. These skills lean into that by solving one of the biggest practical problems: **session continuity**.
-
-Without a handoff system, every new Claude Code session starts with "where were we?" — re-reading files, re-establishing context, figuring out what's done and what's open. And without a feedback loop, every correction you make in conversation disappears the moment the session ends. These skills eliminate both problems.
-
 ## Skills
 
 ### `/brief` — Session Close
